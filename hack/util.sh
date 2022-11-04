@@ -228,6 +228,7 @@ function util::install_istiolib {
   arch_name=$(go env GOARCH)
   ISTIO_VERSION=${istio_version}
   TARGET_ARCH=${arch_name:-x86_64}
+  pushd hack/bin
   curl -sL https://istio.io/downloadIstio | ISTIO_VERSION=${istio_version} TARGET_ARCH=x86_64 sh
   ret=$?
   if [ ${ret} -eq 0 ]; then
@@ -238,7 +239,7 @@ function util::install_istiolib {
 
       # create rootca certificate
       mkdir -p istio-${istio_version}/certs
-      pushd hack/bin/istio-${istio_version}/certs
+      pushd istio-${istio_version}/certs
 
       make -f ../tools/certs/Makefile.selfsigned.mk root-ca
       popd
@@ -247,6 +248,7 @@ function util::install_istiolib {
       echo "Failed to install istio, can not download istio-${istio_version} for ${arch_name:-amd64}"
       exit 1
   fi
+  popd
 }
 
 
