@@ -18,7 +18,7 @@ On a ubuntu 20.04 machine
 - Run k8s_cluster_setup.sh, this will install all prerequisites to run the kind_create_cluster.sh
 - Run the kind_create_cluster.sh script. It takes number of clusters as parameters, default is 4 
  
-./kind_create_clusters.sh <number of clusters>
+Example:  ./kind_create_clusters.sh 2
 
 
     Following gets installed in each cluster,
