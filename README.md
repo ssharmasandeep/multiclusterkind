@@ -4,8 +4,6 @@
 - Creates kind clusters
 - Installs the following in the clusters
     - Metallb
-    - ISTIO
-    - Weave
     - Multus
     - Macvlan
 ***
@@ -18,15 +16,10 @@
 ### Setup 
 On a ubuntu 20.04 machine
 - Run k8s_cluster_setup.sh, this will install all prerequisites to run the kind_create_cluster.sh
-- Run the kind_create_cluster.sh script. It is interactive, following is an example,
+- Run the kind_create_cluster.sh script. It takes number of clusters as parameters, default is 4 
  
-./kind_create_clusters.sh
+./kind_create_clusters.sh <number of clusters>
 
-    Enter Host IP: .. <optional>
-    Number of Clusters: 4 
-    Do you wish to install CNI for Free5GC? y. 
-    Do you wish to install ISTIO? n. 
-    Do you wish to install METALLB? y.
 
     Following gets installed in each cluster,
     export KUBECONFIG=~/.kube/cluster2.config

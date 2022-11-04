@@ -13,56 +13,61 @@ source "${REPO_ROOT}"/hack/util.sh
 
 # variable define
 KUBECONFIG_PATH=${KUBECONFIG_PATH:-"${HOME}/.kube"}
-ISTIO_SETUP_METALLB=""
-F5GCNI_SETUP=""
+ISTIO_SETUP_COMPLETE=""
+# hardcode the following
+F5GCNI_SETUP="YES"
+ISTIO_SETUP_METALLB="INSTALL_METALLB"
+NUM_CLUSTERS=${1:-4}
+HOST_IPADDRESS=${2:-}
 
+############
+#echo "Enter Host IP: .. <optional>"
+#read HOST_IPADDRESS
 
-echo "Enter Host IP: .. <optional>"
-read HOST_IPADDRESS
-
-echo "Number of Clusters:" 
-read NUM_CLUSTERS
-if [[ -z $NUM_CLUSTERS ]]; then
-         echo "provide number of clusters to be created."
-         exit 1
-fi
-
-while true; do
-    read -p "Do you wish to install CNI for Free5GC? " yn
-    case $yn in
-        [Yy]* ) 
-             F5GCNI_SETUP="YES"; 
-             ;;
-        [Nn]* )
-             F5GCNI_SETUP=""
-             ;;
-        * ) echo "Please answer yes or no.";;
-    esac
-    read -p "Do you wish to install ISTIO? " yn
-    case $yn in
-        [Yy]* )
-             ISTIO_SETUP_COMPLETE="ISTIO_COMPLETE_INSTALL";
-             ISTIO_SETUP_METALLB="INSTALL_METALLB";
-             break
-             ;;
-        [Nn]* )
-             ISTIO_SETUP_COMPLETE=""
-             ;;
-        * ) echo "Please answer yes or no.";;
-    esac
-    read -p "Do you wish to install METALLB? " yn
-    case $yn in
-        [Yy]* )
-             ISTIO_SETUP_METALLB="INSTALL_METALLB";
-             break
-             ;;
-        [Nn]* )
-             ISTIO_SETUP_METALLB=""
-             break
-             ;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+#echo "Number of Clusters:" 
+#read NUM_CLUSTERS
+#if [[ -z $NUM_CLUSTERS ]]; then
+#         echo "provide number of clusters to be created."
+#         exit 1
+#fi
+#
+#while true; do
+#    read -p "Do you wish to install CNI for Free5GC? " yn
+#    case $yn in
+#        [Yy]* ) 
+#             F5GCNI_SETUP="YES"; 
+#             ;;
+#        [Nn]* )
+#             F5GCNI_SETUP=""
+#             ;;
+#        * ) echo "Please answer yes or no.";;
+#    esac
+#    read -p "Do you wish to install ISTIO? " yn
+#    case $yn in
+#        [Yy]* )
+#             ISTIO_SETUP_COMPLETE="ISTIO_COMPLETE_INSTALL";
+#             ISTIO_SETUP_METALLB="INSTALL_METALLB";
+#             break
+#             ;;
+#        [Nn]* )
+#             ISTIO_SETUP_COMPLETE=""
+#             ;;
+#        * ) echo "Please answer yes or no.";;
+#    esac
+#    read -p "Do you wish to install METALLB? " yn
+#    case $yn in
+#        [Yy]* )
+#             ISTIO_SETUP_METALLB="INSTALL_METALLB";
+#             break
+#             ;;
+#        [Nn]* )
+#             ISTIO_SETUP_METALLB=""
+#             break
+#             ;;
+#        * ) echo "Please answer yes or no.";;
+#    esac
+#done
+###############
 
 CLUSTER_VERSION=${CLUSTER_VERSION:-"kindest/node:v1.21.1"}
 KIND_LOG_FILE=${KIND_LOG_FILE:-"/tmp/targetClusters"}
